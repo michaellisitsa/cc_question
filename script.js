@@ -30,8 +30,6 @@ const loadModal = (message) => {
   noBtn.innerText = 'No';
   modalContent.appendChild(noBtn);
 
-  console.log(body);
-
   //Add event listeners on the buttons with class "yes" and "no"
   document.addEventListener('click', function (e) {
     if (!e.target.matches('.yes')) return;
@@ -64,7 +62,7 @@ document.addEventListener('click', function (e) {
 });
 
 const dismiss = (message) => {
-  var modal = document.getElementById('myModal');
+  let modal = document.getElementById('myModal');
   var body = document.getElementsByTagName('body')[0];
   modal.remove();
   var returnMessage = document.createElement('p');
