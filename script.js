@@ -52,6 +52,12 @@ document.addEventListener('click', function (e) {
   if (!e.target.matches('.confirmation')) return;
   e.preventDefault();
 
+  //Remove any previous return messages
+  const returnMessage = document.querySelector('.return');
+  if (returnMessage != null) {
+    returnMessage.remove();
+  }
+
   //https://developer.mozilla.org/en-US/docs/Learn/HTML/Howto/Use_data_attributes
   //How to pass arbitrary data with component
   loadModal(e.target.dataset.message);
@@ -62,6 +68,7 @@ const dismiss = (message) => {
   var body = document.getElementsByTagName('body')[0];
   modal.remove();
   var returnMessage = document.createElement('p');
+  returnMessage.setAttribute('class', 'return');
   returnMessage.innerText = message;
   body.appendChild(returnMessage);
 };
