@@ -5,6 +5,7 @@ const loadModal = (message) => {
   //Create the modal parent tag
   var modal = document.createElement('div');
   modal.setAttribute('id', 'myModal');
+  modal.setAttribute('class', 'modal');
   body.appendChild(modal);
 
   //create and append the content wrapper of the modal
