@@ -31,16 +31,37 @@ const loadModal = (message) => {
   modalContent.appendChild(noBtn);
 
   console.log(body);
+
+  //Add event listeners on the buttons with class "yes" and "no"
+  document.addEventListener('click', function (e) {
+    if (!e.target.matches('.yes')) return;
+    e.preventDefault();
+    dismiss('You just clicked "Yes"');
+  });
+
+  document.addEventListener('click', function (e) {
+    if (!e.target.matches('.no')) return;
+    e.preventDefault();
+    dismiss('You just clicked "No"');
+  });
 };
 
 //gomakethings.com/listening-for-click-events-with-vanilla-javascript
 document.addEventListener('click', function (e) {
   // Bail if the correct class isn't found on the clicked element
   if (!e.target.matches('.confirmation')) return;
-
   e.preventDefault();
 
   //https://developer.mozilla.org/en-US/docs/Learn/HTML/Howto/Use_data_attributes
   //How to pass arbitrary data with component
   loadModal(e.target.dataset.message);
 });
+
+const dismiss = (message) => {
+  var modal = document.getElementById('myModal');
+  var body = document.getElementsByTagName('body')[0];
+  modal.remove();
+  var returnMessage = document.createElement('p');
+  returnMessage.innerText = message;
+  body.appendChild(returnMessage);
+};
