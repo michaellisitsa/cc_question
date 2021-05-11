@@ -30,18 +30,27 @@ const loadModal = (message) => {
   noBtn.innerText = 'No';
   modalContent.appendChild(noBtn);
 
-  //Add event listeners on the buttons with class "yes" and "no"
-  document.addEventListener('click', function (e) {
+  let yesListener = function (e) {
     if (!e.target.matches('.yes')) return;
     e.preventDefault();
+    document.removeEventListener('click',yesListener)
+    document.removeEventListener('click',noListener)
     dismiss('You just clicked "Yes"');
-  });
+  };
 
-  document.addEventListener('click', function (e) {
+  let noListener = function (e) {
     if (!e.target.matches('.no')) return;
     e.preventDefault();
+    document.removeEventListener('click',noListener)
+    document.removeEventListener('click',yesListener)
+
     dismiss('You just clicked "No"');
-  });
+  };
+
+  //Add event listeners on the buttons with class "yes" and "no"
+  document.addEventListener('click', yesListener);
+
+  document.addEventListener('click', noListener);
 };
 
 //gomakethings.com/listening-for-click-events-with-vanilla-javascript
