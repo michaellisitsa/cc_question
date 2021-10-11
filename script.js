@@ -1,9 +1,11 @@
+var modal;
+
 const loadModal = (message) => {
   //https://www.w3schools.com/jsref/dom_obj_body.asp
   var body = document.getElementsByTagName('body')[0];
 
   //Create the modal parent tag
-  var modal = document.createElement('div');
+  modal = document.createElement('div');
   modal.setAttribute('id', 'myModal');
   modal.setAttribute('class', 'modal');
   body.appendChild(modal);
@@ -30,31 +32,36 @@ const loadModal = (message) => {
   noBtn.innerText = 'No';
   modalContent.appendChild(noBtn);
 
-  let yesListener = function (e) {
-    if (!e.target.matches('.yes')) return;
-    e.preventDefault();
-    document.removeEventListener('click',yesListener)
-    document.removeEventListener('click',noListener)
-    dismiss('You just clicked "Yes"');
-  };
-
-  let noListener = function (e) {
-    if (!e.target.matches('.no')) return;
-    e.preventDefault();
-    document.removeEventListener('click',noListener)
-    document.removeEventListener('click',yesListener)
-
-    dismiss('You just clicked "No"');
-  };
 
   //Add event listeners on the buttons with class "yes" and "no"
-  document.addEventListener('click', yesListener);
+  yesBtn.addEventListener('click', yesListener);
+  noBtn.addEventListener('click', noListener);
+};
 
-  document.addEventListener('click', noListener);
+function yesListener (e) {
+  // if (!e.target.matches('.yes')) return;
+  // e.preventDefault();
+  //Remove event listeners 
+  //https://stackoverflow.com/questions/4402287/javascript-remove-event-listener#comment12343620_4402287
+  // document.removeEventListener('click',yesListener)
+  // document.removeEventListener('click',noListener)
+  dismiss('You just clicked "Yes"');
+};
+
+function noListener (e) {
+  // if (!e.target.matches('.no')) return;
+  // e.preventDefault();
+  // document.removeEventListener('click',noListener)
+  // document.removeEventListener('click',yesListener)
+
+  dismiss('You just clicked "No"');
 };
 
 //gomakethings.com/listening-for-click-events-with-vanilla-javascript
-document.addEventListener('click', function (e) {
+// Action on clicking function on button on main page (not modal)
+// Adjusted to avoid anonymous function
+// https://ultimatecourses.com/blog/avoiding-anonymous-javascript-functions
+function btnClick(e) {
   // Bail if the correct class isn't found on the clicked element
   if (!e.target.matches('.confirmation')) return;
   e.preventDefault();
@@ -68,7 +75,9 @@ document.addEventListener('click', function (e) {
   //https://developer.mozilla.org/en-US/docs/Learn/HTML/Howto/Use_data_attributes
   //How to pass arbitrary data with component
   loadModal(e.target.dataset.message);
-});
+}
+
+document.addEventListener('click', btnClick);
 
 const dismiss = (message) => {
   let modal = document.getElementById('myModal');
